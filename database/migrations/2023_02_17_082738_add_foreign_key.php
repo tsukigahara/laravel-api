@@ -15,7 +15,7 @@ return new class extends Migration
             $table->foreignId('genre_id')->constrained('genres');
         });
 
-        Schema::table('tags_movies', function (Blueprint $table) {
+        Schema::table('movie_tag', function (Blueprint $table) {
             $table->foreignId('tag_id')->constrained('tags');
             $table->foreignId('movie_id')->constrained('movies');
         });
@@ -30,7 +30,7 @@ return new class extends Migration
             $table->dropForeign(['genre_id']);
         });
 
-        Schema::table('tags_movies', function (Blueprint $table) {
+        Schema::table('movie_tag', function (Blueprint $table) {
             $table->dropForeign(['tag_id']);
             $table->dropForeign(['movie_id']);
         });
