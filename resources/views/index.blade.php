@@ -34,6 +34,11 @@
                     <a href="">
                         <li>
                             {{ $movie->name }} - {{$movie->year}}
+                            {{-- edit delete buttons --}}
+                            <a href="{{route('movies.edit', $movie)}}" type="button"
+                                class="btn btn-primary m-1">edit</a>
+                            <a href="{{route('movies.delete', $movie)}}" type="button"
+                                class="btn btn-danger m-1">edit</a>
                         </li>
                     </a>
                     @endforeach

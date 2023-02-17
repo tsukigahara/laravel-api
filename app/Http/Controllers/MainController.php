@@ -27,23 +27,58 @@ class MainController extends Controller
     {
         $genres = Genre::all();
         $tags = Tag::all();
-        return view('movies.create', compact(['genres', 'tags']));
+        return view('movies.create', compact('genres', 'tags'));
     }
 
     public function store(Request $request)
     {
         $data = $request->all();
 
-        $newMovie = Movie::make($data);
+        $movie = Movie::make($data);
 
         // one to many
         $genre = Genre::find($data['genre_id']);
-        $newMovie->genre()->associate($genre);
-        $newMovie->save();
+        $movie->genre()->associate($genre);
+        $movie->save();
 
         // many to may
         $tags = Tag::find($data['tags']);
-        $newMovie->tags()->attach($tags);
+        $movie->tags()->attach($tags); //or sync()
+
+        return redirect()->route('index');
+    }
+
+    public function edit(Movie $movie)
+    {
+        $genres = Genre::all();
+        $tags = Tag::all();
+        return view('movies.edit', compact('movie', 'genres', 'tags'));
+    }
+
+    public function update(Request $request, Movie $movie)
+    {
+        $data = $request->all();
+
+        // one to many
+        $genre = Genre::find($data['genre_id']);
+        $movie->genre()->associate($genre);
+        $movie->update($data);
+
+        // many to many
+        $tags = Tag::find($data['tags']);
+        $movie->tags()->sync($tags);
+
+        return redirect()->route('index');
+    }
+
+    public function destroy(Movie $movie)
+    {
+
+        // detaching relation
+        $movie->tags()->sync([]);
+
+        // delete
+        $movie->delete();
 
         return redirect()->route('index');
     }

@@ -18,3 +18,6 @@ Route::get('/', [MainController::class, 'index'])->name('index');
 Route::get('/movies', [MainController::class, 'indexMovie'])->name('movies.index');
 Route::get('/movies/create', [MainController::class, 'create'])->name('movies.create');
 Route::post('/movies/store', [MainController::class, 'store'])->name('movies.store');
+Route::get('/movies/edit/{movie}', [MainController::class, 'edit'])->name('movies.edit');
+Route::post('/movies/update/{movie}', [MainController::class, 'update'])->name('movies.update');
+Route::get('/movies/delete/{movie}', [MainController::class, 'destroy'])->name('movies.delete');
