@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [MainController::class, 'index'])->name('index');
+Route::get('/movies', [MainController::class, 'indexMovie'])->name('movies.index');
+Route::get('/movies/create', [MainController::class, 'create'])->name('movies.create');
+Route::post('/movies/store', [MainController::class, 'store'])->name('movies.store');
